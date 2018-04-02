@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.molo.tomermai.moloalpha.model.ClassesResponse;
 import com.molo.tomermai.moloalpha.model.EmptyClass;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
      * URL for class data from the Molo servers
      */
     private static final String MOLO_REQUEST_URL =
-            "https://follow-molo/classes";
+            "https://nj7e2klboc.execute-api.eu-west-1.amazonaws.com/follow_molo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,38 +40,39 @@ public class MainActivity extends AppCompatActivity {
 
     public void fetchClasses(final View view) {
         final ClassesFetcher fetcher = new ClassesFetcher(view.getContext());
-        final String city = ((EditText) findViewById(R.id.building_name_input)).getText().toString();
+        final String building = ((EditText) findViewById(R.id.building_name_input)).getText().toString();
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Looking for empty classes...");
         progressDialog.show();
 
         // temporal hard coded hack
-        EmptyClass emptyClassResult = new EmptyClass(
-                "E303",
-                1,
-                1);
+//        EmptyClass emptyClassResult = new EmptyClass(
+//                "E303",
+//                1,
+//                1, m_timeLeft, m_imageURL);
 
-        startResultActivity(view, emptyClassResult);
+//        startResultActivity(view, emptyClassResult);
 
-        fetcher.dispatchRequest(city, new ClassesFetcher.ClassesResponseListener() {
+        fetcher.dispatchRequest(building, new ClassesFetcher.ClassesResponseListener() {
             @SuppressLint("ShowToast")
             @Override
-            public void onResponse(ClassesFetcher.ClassesResponse response) {
+            public void onResponse(ClassesResponse response) {
                 progressDialog.hide();
 
-                if (response.isError) {
+                if (response.isError()) {
                     Toast.makeText(view.getContext(),
                             "Error while looking for a class",
                             Toast.LENGTH_LONG);
 
                     return;
                 }
-                EmptyClass emptyClassResult = new EmptyClass(
-                        response.className,
-                        response.classSound,
-                        response.classPopulation);
+                EmptyClass currentClass = response.getEmptyClasses().get(0);
+//                EmptyClass emptyClassResult = new EmptyClass(
+//                        response.className,
+//                        response.classSound,
+//                        response.classPopulation, m_timeLeft, m_imageURL);
 
-                startResultActivity(view, emptyClassResult);
+                startResultActivity(view, currentClass);
 
 //                ((TextView) MainActivity.this.findViewById(R.id.response_class_name))
 //                        .setText(response.className);
