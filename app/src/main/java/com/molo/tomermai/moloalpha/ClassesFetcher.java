@@ -86,10 +86,10 @@ public class ClassesFetcher {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-//                            JSONArray items = response.getJSONArray("items");
-                            JSONObject item = new JSONObject(String.valueOf(response));
-                            JSONArray items = new JSONArray();
-                            items.put(item);
+                            JSONArray items = response.getJSONArray("item");
+//                            JSONObject item = new JSONObject(String.valueOf(response));
+//                            JSONArray items = new JSONArray();
+//                            items.put(item);
 
                             List<EmptyClass> emptyClassesListFromJSON = new ArrayList<>();
                             int numOfResults = items.length();
@@ -104,8 +104,10 @@ public class ClassesFetcher {
                                     String className = currentEmptyClass.getString("className");
                                     int population = currentEmptyClass.getInt("population");
                                     int noise = currentEmptyClass.getInt("noise");
-                                    int timeLeft = currentEmptyClass.getInt("timeLeft");
+//                                    int timeLeft = currentEmptyClass.getInt("timeLeft");
+                                    int timeLeft = 43;
                                     String imageURL = currentEmptyClass.getString("classImage");
+//                                    String imageURL = "http://www.mealliance.com.au/wp-content/uploads/2017/03/education-classroom-empty.jpg";
 
                                     EmptyClass emptyClass = new EmptyClass(className,
                                             noise,

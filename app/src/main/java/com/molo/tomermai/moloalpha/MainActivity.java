@@ -11,6 +11,9 @@ import android.widget.Toast;
 
 import com.molo.tomermai.moloalpha.model.ClassesResponse;
 import com.molo.tomermai.moloalpha.model.EmptyClass;
+import com.molo.tomermai.moloalpha.model.EmptyClassList;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Called when the user taps the molo button
      */
-    public void startResultActivity(View view, EmptyClass emptyClassResult) {
+    public void startResultActivity(View view, EmptyClassList emptyClassResult) {
         Intent intent = new Intent(this, ResultClassActivity.class);
         intent.putExtra(EXTRA_CLASS_RES, emptyClassResult);
         startActivity(intent);
@@ -62,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isError()) {
                     Toast.makeText(view.getContext(),
                             "Error while looking for a class",
-                            Toast.LENGTH_LONG);
+                            Toast.LENGTH_LONG).show();
 
                     return;
                 }
-                EmptyClass currentClass = response.getEmptyClasses().get(0);
+                EmptyClassList currentClass = response.getEmptyClasses();
 //                EmptyClass emptyClassResult = new EmptyClass(
 //                        response.className,
 //                        response.classSound,

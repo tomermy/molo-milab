@@ -11,6 +11,11 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.molo.tomermai.moloalpha.model.EmptyClass;
+import com.molo.tomermai.moloalpha.model.EmptyClassList;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class ResultClassActivity extends AppCompatActivity {
 
@@ -19,23 +24,52 @@ public class ResultClassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_class);
 
-        final EmptyClass emptyClassResult = (EmptyClass) getIntent()
-                .getSerializableExtra(MainActivity.EXTRA_CLASS_RES);
+        final List<EmptyClass> emptyClasses = ((EmptyClassList) getIntent()
+                .getSerializableExtra(MainActivity.EXTRA_CLASS_RES)).getClasses();
 
+        final ListIterator<EmptyClass> classIterator = emptyClasses.listIterator();
+        EmptyClass emptyClassResult = null;
+        if (!emptyClasses.isEmpty()) {
+            emptyClassResult = classIterator.next();
+        }
         // todo: add results validation
 
         ImageView classImage = this.findViewById(R.id.empty_class_image);
         Button shareButton = this.findViewById(R.id.share_whatsapp_button);
+        Button nextButton = this.findViewById(R.id.next_class_button);
 
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createWhatsAppIntent(emptyClassResult);
+                int nextEmptyClassIndex = classIterator.nextIndex();
+                if (nextEmptyClassIndex == emptyClasses.size() + 1) {
+                    createWhatsAppIntent(classIterator.previous());
+                }
+                else {
+                    createWhatsAppIntent(emptyClasses.get(nextEmptyClassIndex - 1));
+                }
             }
         });
 
-        Glide.with(this).load("http://via.placeholder.com/300.png").into(classImage);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (classIterator.hasNext()) {
+                    updateFieldsUI(classIterator.next());
+                } else {
+                    printToastToScreen("NO MORE CLASSES!");
+                }
+            }
+        });
 
+
+        Glide.with(this).load("http://www.mealliance.com.au/wp-content/uploads/2017/03/education-classroom-empty.jpg").into(classImage);
+        updateFieldsUI(emptyClassResult);
+
+
+    }
+
+    private void updateFieldsUI(EmptyClass emptyClassResult) {
         ((TextView) this.findViewById(R.id.response_class_name2))
                 .setText(emptyClassResult.getClassName());
 
@@ -51,7 +85,7 @@ public class ResultClassActivity extends AppCompatActivity {
         whatsappIntent.setType("text/plain");
         whatsappIntent.setPackage("com.whatsapp");
         whatsappIntent.putExtra(Intent.EXTRA_TEXT,
-                "Molo discovered *" +emptyClassResult.getClassName() + "* is Empty!");
+                "Molo discovered *" + emptyClassResult.getClassName() + "* is Empty!");
         try {
             startActivity(whatsappIntent);
         } catch (android.content.ActivityNotFoundException ex) {

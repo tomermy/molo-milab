@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/bt_background"
+        android:background="@drawable/bt_background4"
         android:onClick="fetchClasses"
         android:text="@string/getEmptyClassButton"
         android:textColor="@android:color/holo_blue_bright"
@@ -51,10 +51,9 @@
         android:id="@+id/building_name_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/get_class_button"
+        android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/get_class_button"
-        android:layout_marginBottom="83dp"
-        android:layout_marginStart="23dp"
+        android:layout_marginTop="11dp"
         android:hint="Building Name Filter" />
 
 

@@ -44,7 +44,7 @@ public class ClassesResponse {
         return numOfClasses;
     }
 
-    public List<EmptyClass> getEmptyClasses() {
-        return emptyClasses;
+    public EmptyClassList getEmptyClasses() {
+        return new EmptyClassList(emptyClasses);
     }
 }
