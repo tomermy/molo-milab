@@ -1,24 +1,22 @@
 package com.molo.tomermai.moloalpha;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.molo.tomermai.moloalpha.model.ClassesResponse;
-import com.molo.tomermai.moloalpha.model.EmptyClass;
 import com.molo.tomermai.moloalpha.model.EmptyClassList;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getName();
     public static final String EXTRA_CLASS_RES = "com.example.tomermai.ex2.FAMILY";
+    LottieAnimationView lottieAnimation;
 
     /**
      * URL for class data from the Molo servers
@@ -43,16 +41,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void fetchClasses(final View view) {
         final ClassesFetcher fetcher = new ClassesFetcher(view.getContext());
-        final String building = ((EditText) findViewById(R.id.building_name_input)).getText().toString();
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Looking for empty classes...");
-        progressDialog.show();
+        final String building = "";
+//        final String building = ((EditText) findViewById(R.id.building_name_input)).getText().toString();
+//        final ProgressDialog progressDialog = new ProgressDialog(this);
+//        progressDialog.setMessage("Looking for empty classes...");
+//        progressDialog.show();
 
         fetcher.dispatchRequest(building, new ClassesFetcher.ClassesResponseListener() {
             @SuppressLint("ShowToast")
             @Override
             public void onResponse(ClassesResponse response) {
-                progressDialog.hide();
+//                progressDialog.hide();
+                lottieAnimation.cancelAnimation();
 
                 if (response.isError()) {
                     Toast.makeText(view.getContext(),
@@ -63,15 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 EmptyClassList currentClass = response.getEmptyClasses();
                 startResultActivity(view, currentClass);
-
-//                ((TextView) MainActivity.this.findViewById(R.id.response_class_name))
-//                        .setText(response.className);
-//
-//                ((TextView) MainActivity.this.findViewById(R.id.response_class_population))
-//                        .setText(String.valueOf(response.classPopulation));
-//
-//                ((TextView) MainActivity.this.findViewById(R.id.response_class_sound))
-//                        .setText(response.classSound);
             }
         });
     }
