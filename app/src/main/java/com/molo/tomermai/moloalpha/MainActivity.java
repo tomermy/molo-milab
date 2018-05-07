@@ -48,14 +48,6 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setMessage("Looking for empty classes...");
         progressDialog.show();
 
-        // temporal hard coded hack
-//        EmptyClass emptyClassResult = new EmptyClass(
-//                "E303",
-//                1,
-//                1, m_timeLeft, m_imageURL);
-
-//        startResultActivity(view, emptyClassResult);
-
         fetcher.dispatchRequest(building, new ClassesFetcher.ClassesResponseListener() {
             @SuppressLint("ShowToast")
             @Override
@@ -70,11 +62,6 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 EmptyClassList currentClass = response.getEmptyClasses();
-//                EmptyClass emptyClassResult = new EmptyClass(
-//                        response.className,
-//                        response.classSound,
-//                        response.classPopulation, m_timeLeft, m_imageURL);
-
                 startResultActivity(view, currentClass);
 
 //                ((TextView) MainActivity.this.findViewById(R.id.response_class_name))

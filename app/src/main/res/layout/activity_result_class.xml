@@ -37,8 +37,8 @@
 
         <ImageView
             android:id="@+id/empty_class_image"
-            android:layout_width="220dp"
-            android:layout_height="150dp"
+            android:layout_width="280dp"
+            android:layout_height="200dp"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
 

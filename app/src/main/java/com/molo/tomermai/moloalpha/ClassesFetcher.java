@@ -87,12 +87,10 @@ public class ClassesFetcher {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray items = response.getJSONArray("item");
-//                            JSONObject item = new JSONObject(String.valueOf(response));
-//                            JSONArray items = new JSONArray();
-//                            items.put(item);
-
                             List<EmptyClass> emptyClassesListFromJSON = new ArrayList<>();
                             int numOfResults = items.length();
+
+                            // Empty results case
                             if (numOfResults == 0) {
                                 listener.onResponse(new ClassesResponse(false,
                                         true,
@@ -109,11 +107,13 @@ public class ClassesFetcher {
                                     String imageURL = currentEmptyClass.getString("classImage");
 //                                    String imageURL = "http://www.mealliance.com.au/wp-content/uploads/2017/03/education-classroom-empty.jpg";
 
+                                    // Construct class from results
                                     EmptyClass emptyClass = new EmptyClass(className,
                                             noise,
                                             population,
                                             timeLeft,
                                             imageURL);
+
 
                                     emptyClassesListFromJSON.add(emptyClass);
                                 }
