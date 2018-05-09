@@ -63,7 +63,8 @@ public class ResultClassActivity extends AppCompatActivity {
         });
 
 
-        Glide.with(this).load("http://www.mealliance.com.au/wp-content/uploads/2017/03/education-classroom-empty.jpg").into(classImage);
+//        Glide.with(this).load("http://www.mealliance.com.au/wp-content/uploads/2017/03/education-classroom-empty.jpg").into(classImage);
+        Glide.with(this).load(R.drawable.arison_1).into(classImage);
         updateFieldsUI(emptyClassResult);
 
 

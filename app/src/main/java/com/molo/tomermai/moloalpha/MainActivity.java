@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getName();
     public static final String EXTRA_CLASS_RES = "com.example.tomermai.ex2.FAMILY";
-    LottieAnimationView lottieAnimation;
+//    LottieAnimationView lottieAnimation;
 
     /**
      * URL for class data from the Molo servers
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(ClassesResponse response) {
 //                progressDialog.hide();
-                lottieAnimation.cancelAnimation();
+//                lottieAnimation.cancelAnimation();
 
                 if (response.isError()) {
                     Toast.makeText(view.getContext(),
