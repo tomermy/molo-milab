@@ -12,10 +12,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.molo.tomermai.moloalpha.model.EmptyClass;
 import com.molo.tomermai.moloalpha.model.EmptyClassList;
+import com.molo.tomermai.moloalpha.util.Mappers;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+
+import static com.molo.tomermai.moloalpha.util.Mappers.getClassNoiseOrEmpty;
+import static com.molo.tomermai.moloalpha.util.Mappers.getClassPopulationOrEmpty;
 
 public class ResultClassActivity extends AppCompatActivity {
 
@@ -44,8 +48,7 @@ public class ResultClassActivity extends AppCompatActivity {
                 int nextEmptyClassIndex = classIterator.nextIndex();
                 if (nextEmptyClassIndex == emptyClasses.size() + 1) {
                     createWhatsAppIntent(classIterator.previous());
-                }
-                else {
+                } else {
                     createWhatsAppIntent(emptyClasses.get(nextEmptyClassIndex - 1));
                 }
             }
@@ -74,11 +77,13 @@ public class ResultClassActivity extends AppCompatActivity {
         ((TextView) this.findViewById(R.id.response_class_name2))
                 .setText(emptyClassResult.getClassName());
 
-        ((TextView) this.findViewById(R.id.response_class_population2))
-                .setText(String.valueOf(emptyClassResult.getClassPopulation()));
+        ((ImageView) this.findViewById(R.id.response_class_population2))
+//                .setText(String.valueOf(emptyClassResult.getClassPopulation()));
+                .setImageResource(getClassPopulationOrEmpty(emptyClassResult.getClassPopulation()));
 
-        ((TextView) this.findViewById(R.id.response_class_sound2))
-                .setText(String.valueOf(emptyClassResult.getClassSoundLevel()));
+        ((ImageView) this.findViewById(R.id.response_class_sound2))
+//                .setText(String.valueOf(emptyClassResult.getClassSoundLevel()));
+                .setImageResource(getClassNoiseOrEmpty(emptyClassResult.getClassSoundLevel()));
     }
 
     private void createWhatsAppIntent(EmptyClass emptyClassResult) {
