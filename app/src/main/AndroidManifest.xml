@@ -22,6 +22,7 @@
         </activity>
         <activity
             android:name=".ResultClassActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity">
         </activity>
     </application>
